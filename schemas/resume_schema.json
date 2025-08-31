@@ -1,0 +1,48 @@
+{
+  "user_id": 1,
+  "title": "Software Engineer Resume",
+  "personal_info": {
+    "full_name": "Ankita Singh",
+    "phone": "1234567890",
+    "address": "XYZ Hostel",
+    "linkedin": "https://linkedin.com/in/ankita",
+    "github": "https://github.com/ankita",
+    "portfolio": "https://ankita.dev"
+  },
+  "education": [
+    {
+      "degree": "B.Tech CSE",
+      "institution": "XYZ University",
+      "start_date": "2021-08",
+      "end_date": "2025-05",
+      "grade": "8.5 CGPA"
+    }
+  ],
+  "experience": [
+    {
+      "company": "ABC Pvt Ltd",
+      "role": "Intern",
+      "start_date": "2024-05",
+      "end_date": "2024-07",
+      "description": "Built REST APIs using Flask & SQLAlchemy"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Library Management System",
+      "description": "Core Java + JDBC project",
+      "tech_stack": "Java, MySQL",
+      "link": "https://github.com/ankita/library"
+    }
+  ],
+  "skills": [
+    { "category": "Programming Languages", "skill_name": "Java" },
+    { "category": "Frameworks", "skill_name": "Flask" }
+  ],
+  "certificates": [
+    { "title": "AWS Certified", "issuer": "Amazon", "date": "2025-03" }
+  ],
+  "areas_of_improvement": [
+    { "description": "Improve system design knowledge" }
+  ]
+}

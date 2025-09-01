@@ -5,6 +5,11 @@ export interface PersonalInfo {
   address: string;
   linkedin?: string;
   website?: string;
+  github?: string;
+}
+
+export interface JobPrompt {
+  jobDescription: string;
 }
 
 export interface Education {
@@ -30,11 +35,17 @@ export interface Project {
   techStack: string[];
 }
 
+export interface SkillCategory {
+  name: string;
+  skills: string[];
+}
+
 export interface ResumeData {
+  jobPrompt: JobPrompt;
   personal: PersonalInfo;
   education: Education[];
   experience: Experience[];
-  skills: string[];
+  skills: SkillCategory[];
   projects: Project[];
 }
 

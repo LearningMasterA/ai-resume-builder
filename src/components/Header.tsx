@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download, FileText, FileSpreadsheet } from 'lucide-react';
+import { Download, FileText, FileSpreadsheet, Moon, Sun } from 'lucide-react';
 import { ResumeData, ResumeTemplate } from '@/types/resume';
 
 interface HeaderProps {
@@ -12,6 +13,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ selectedTemplate, onTemplateChange, resumeData }) => {
+  const { theme, setTheme } = useTheme();
+  
   const handleExport = (format: 'pdf' | 'word' | 'text') => {
     // TODO: Implement export functionality
     console.log(`Exporting as ${format}...`);
@@ -39,6 +42,20 @@ const Header: React.FC<HeaderProps> = ({ selectedTemplate, onTemplateChange, res
 
           {/* Template Selector & Export Options */}
           <div className="flex items-center space-x-4">
+            {/* Dark Mode Toggle */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="w-10 h-10 p-0"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </Button>
+
             {/* Template Selector */}
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">Template:</span>

@@ -3,30 +3,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FormWizard from './FormWizard';
 import ResumePreview from './ResumePreview';
 import Header from './Header';
-import { ResumeData } from '@/types/resume';
+import { ResumeData, SkillCategory } from '@/types/resume';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 const ResumeBuilder = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [resumeData, setResumeData] = useLocalStorage<ResumeData>('resume-data', {
+    jobPrompt: {
+      jobDescription: ''
+    },
     personal: {
       fullName: '',
       email: '',
       phone: '',
       address: '',
       linkedin: '',
-      website: ''
+      website: '',
+      github: ''
     },
     education: [],
     experience: [],
-    skills: [],
+    skills: [] as SkillCategory[],
     projects: []
   });
   const [selectedTemplate, setSelectedTemplate] = useState<'classic' | 'modern' | 'minimal'>('modern');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDataUpdate = (stepData: any, step: number) => {
-    const stepKeys = ['personal', 'education', 'experience', 'skills', 'projects'];
+    const stepKeys = ['jobPrompt', 'personal', 'education', 'experience', 'skills', 'projects'];
     const stepKey = stepKeys[step];
     
     setResumeData(prev => ({

@@ -20,6 +20,7 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
           {data.personal.address && <div>{data.personal.address}</div>}
           {data.personal.linkedin && <div>{data.personal.linkedin}</div>}
           {data.personal.website && <div>{data.personal.website}</div>}
+          {data.personal.github && <div>{data.personal.github}</div>}
         </div>
       </header>
 
@@ -87,9 +88,13 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
           <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
             SKILLS
           </h2>
-          <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.6' }}>
-            {data.skills.join(' • ')}
-          </div>
+        <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.6' }}>
+          {data.skills.map((category, index) => (
+            <div key={category.name} className={index > 0 ? 'mt-2' : ''}>
+              <strong>{category.name}:</strong> {category.skills.join(', ')}
+            </div>
+          ))}
+        </div>
         </section>
       )}
 
@@ -105,9 +110,13 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
                 <h3 className="text-base font-medium mb-1" style={{ fontSize: '14px', fontWeight: '500' }}>
                   {project.title}
                 </h3>
-                <p className="text-sm mb-2" style={{ fontSize: '12px', lineHeight: '1.5' }}>
-                  {project.description}
-                </p>
+                <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.5' }}>
+                  {project.description.split('\n').filter(line => line.trim()).map((line, index) => (
+                    <div key={index} className="mb-1">
+                      {line.startsWith('•') ? line : `• ${line}`}
+                    </div>
+                  ))}
+                </div>
                 {project.techStack.length > 0 && (
                   <p className="text-xs" style={{ fontSize: '11px', color: '#666' }}>
                     {project.techStack.join(' • ')}

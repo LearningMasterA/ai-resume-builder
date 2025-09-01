@@ -102,18 +102,8 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, onUpdate }) => {
                     onChange={(e) => updateProject(project.id, 'title', e.target.value)}
                   />
                 </div>
-                
-                <div className="space-y-2">
-                  <Label>Description</Label>
-                  <Textarea
-                    placeholder="Built a full-stack e-commerce platform with user authentication, payment processing, and inventory management. Features include real-time chat support and analytics dashboard."
-                    value={project.description}
-                    onChange={(e) => updateProject(project.id, 'description', e.target.value)}
-                    rows={4}
-                  />
-                </div>
 
-                {/* Tech Stack */}
+                {/* Tech Stack - Moved above description */}
                 <div className="space-y-2">
                   <Label>Tech Stack</Label>
                   <div className="flex space-x-2">
@@ -149,12 +139,12 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, onUpdate }) => {
                         <Badge 
                           key={tech} 
                           variant="secondary"
-                          className="flex items-center space-x-1 bg-accent/10 text-accent hover:bg-accent/20"
+                          className="flex items-center space-x-1 bg-primary/10 text-primary hover:bg-primary/20"
                         >
                           <span>{tech}</span>
                           <button
                             onClick={() => removeTechFromProject(project.id, tech)}
-                            className="ml-1 hover:text-destructive"
+                            className="ml-1 hover:text-destructive transition-colors"
                           >
                             <X className="w-3 h-3" />
                           </button>
@@ -162,6 +152,19 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, onUpdate }) => {
                       ))}
                     </div>
                   )}
+                </div>
+                
+                <div className="space-y-2">
+                  <Label>Project Description</Label>
+                  <Textarea
+                    placeholder="Built a full-stack e-commerce platform with user authentication&#10;Implemented payment processing and inventory management&#10;Features include real-time chat support and analytics dashboard"
+                    value={project.description}
+                    onChange={(e) => updateProject(project.id, 'description', e.target.value)}
+                    rows={4}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Enter each point on a new line. Bullet points will be added automatically.
+                  </p>
                 </div>
               </CardContent>
             </Card>

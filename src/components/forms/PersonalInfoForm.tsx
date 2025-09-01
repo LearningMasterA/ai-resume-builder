@@ -93,6 +93,17 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ data, onUpdate }) =
               />
             </div>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="github">GitHub</Label>
+              <Input
+                id="github"
+                placeholder="github.com/johndoe"
+                {...register('github')}
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
     </motion.div>

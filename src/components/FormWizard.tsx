@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import PersonalInfoForm from './forms/PersonalInfoForm';
 import JobPromptForm from './forms/JobPromptForm';
+import SelfIntroductionForm from './forms/SelfIntroductionForm';
 import EducationForm from './forms/EducationForm';
 import ExperienceForm from './forms/ExperienceForm';
 import SkillsForm from './forms/SkillsForm';
@@ -21,6 +22,7 @@ interface FormWizardProps {
 const steps = [
   { title: 'Job Description', component: JobPromptForm },
   { title: 'Personal Info', component: PersonalInfoForm },
+  { title: 'Self Introduction', component: SelfIntroductionForm },
   { title: 'Education', component: EducationForm },
   { title: 'Experience', component: ExperienceForm },
   { title: 'Skills', component: SkillsForm },

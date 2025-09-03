@@ -22,6 +22,7 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, onUpdate }) => {
       degree: '',
       school: '',
       duration: '',
+      cgpa: '',
       achievements: '',
     };
     const updatedEducation = [...education, newEducation];
@@ -99,13 +100,23 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, onUpdate }) => {
                   </div>
                 </div>
                 
-                <div className="space-y-2">
-                  <Label>Duration</Label>
-                  <Input
-                    placeholder="2020 - 2024"
-                    value={edu.duration}
-                    onChange={(e) => updateEducation(edu.id, 'duration', e.target.value)}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Duration</Label>
+                    <Input
+                      placeholder="2020 - 2024"
+                      value={edu.duration}
+                      onChange={(e) => updateEducation(edu.id, 'duration', e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>CGPA / Percentage (Optional)</Label>
+                    <Input
+                      placeholder="3.8/4.0 or 85%"
+                      value={edu.cgpa || ''}
+                      onChange={(e) => updateEducation(edu.id, 'cgpa', e.target.value)}
+                    />
+                  </div>
                 </div>
                 
                 <div className="space-y-2">

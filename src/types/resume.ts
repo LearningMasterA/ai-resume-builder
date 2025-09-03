@@ -8,6 +8,10 @@ export interface PersonalInfo {
   github?: string;
 }
 
+export interface SelfIntroduction {
+  description: string;
+}
+
 export interface JobPrompt {
   jobDescription: string;
 }
@@ -17,6 +21,7 @@ export interface Education {
   degree: string;
   school: string;
   duration: string;
+  cgpa?: string;
   achievements?: string;
 }
 
@@ -43,6 +48,7 @@ export interface SkillCategory {
 export interface ResumeData {
   jobPrompt: JobPrompt;
   personal: PersonalInfo;
+  selfIntroduction: SelfIntroduction;
   education: Education[];
   experience: Experience[];
   skills: SkillCategory[];

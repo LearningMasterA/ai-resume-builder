@@ -21,16 +21,53 @@ const ResumeBuilder = () => {
       website: '',
       github: ''
     },
+    selfIntroduction: {
+      description: ''
+    },
     education: [],
     experience: [],
     skills: [] as SkillCategory[],
     projects: []
   });
+
+  // Ensure data integrity for existing localStorage
+  React.useEffect(() => {
+    if (!resumeData.selfIntroduction) {
+      setResumeData(prev => ({
+        ...prev,
+        selfIntroduction: { description: '' }
+      }));
+    }
+    if (!resumeData.skills) {
+      setResumeData(prev => ({
+        ...prev,
+        skills: []
+      }));
+    }
+    if (!resumeData.projects) {
+      setResumeData(prev => ({
+        ...prev,
+        projects: []
+      }));
+    }
+    if (!resumeData.education) {
+      setResumeData(prev => ({
+        ...prev,
+        education: []
+      }));
+    }
+    if (!resumeData.experience) {
+      setResumeData(prev => ({
+        ...prev,
+        experience: []
+      }));
+    }
+  }, []);
   const [selectedTemplate, setSelectedTemplate] = useState<'classic' | 'modern' | 'minimal'>('modern');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDataUpdate = (stepData: any, step: number) => {
-    const stepKeys = ['jobPrompt', 'personal', 'education', 'experience', 'skills', 'projects'];
+    const stepKeys = ['jobPrompt', 'personal', 'selfIntroduction', 'education', 'experience', 'skills', 'projects'];
     const stepKey = stepKeys[step];
     
     setResumeData(prev => ({

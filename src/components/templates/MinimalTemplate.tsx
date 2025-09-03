@@ -24,6 +24,18 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
         </div>
       </header>
 
+      {/* Self Introduction Section */}
+      {data.selfIntroduction?.description && (
+        <section className="mb-8">
+          <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
+            PROFESSIONAL SUMMARY
+          </h2>
+          <p className="text-sm" style={{ fontSize: '12px', lineHeight: '1.5' }}>
+            {data.selfIntroduction.description}
+          </p>
+        </section>
+      )}
+
       {/* Professional Experience Section */}
       {data.experience.length > 0 && (
         <section className="mb-8">
@@ -56,21 +68,32 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
       )}
 
       {/* Education Section */}
-      {data.education.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
-            EDUCATION
-          </h2>
+      <section className="mb-8">
+        <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
+          EDUCATION
+        </h2>
+        {data.education.length > 0 ? (
           <div className="space-y-4">
             {data.education.map((edu) => (
               <div key={edu.id}>
-                <h3 className="text-base font-medium" style={{ fontSize: '14px', fontWeight: '500' }}>
-                  {edu.degree}
-                </h3>
-                <div className="flex justify-between text-sm" style={{ fontSize: '12px', color: '#666' }}>
-                  <span>{edu.school}</span>
-                  <span>{edu.duration}</span>
+                <div className="flex justify-between items-baseline mb-1">
+                  <h3 className="text-base font-medium" style={{ fontSize: '14px', fontWeight: '500' }}>
+                    {edu.degree}
+                  </h3>
+                  <div className="text-right">
+                    <span className="text-sm block" style={{ fontSize: '12px', color: '#666' }}>
+                      {edu.duration}
+                    </span>
+                    {edu.cgpa && (
+                      <span className="text-sm" style={{ fontSize: '12px', color: '#666' }}>
+                        {edu.cgpa}
+                      </span>
+                    )}
+                  </div>
                 </div>
+                <p className="text-sm" style={{ fontSize: '12px', color: '#666' }}>
+                  {edu.school}
+                </p>
                 {edu.achievements && (
                   <p className="text-sm mt-1" style={{ fontSize: '12px' }}>
                     {edu.achievements}
@@ -79,24 +102,28 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <p className="text-sm text-gray-500" style={{ fontSize: '12px' }}>No education information provided</p>
+        )}
+      </section>
 
       {/* Skills Section */}
-      {data.skills.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
-            SKILLS
-          </h2>
-        <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.6' }}>
-          {data.skills.map((category, index) => (
-            <div key={category.name} className={index > 0 ? 'mt-2' : ''}>
-              <strong>{category.name}:</strong> {category.skills.join(', ')}
-            </div>
-          ))}
-        </div>
-        </section>
-      )}
+      <section className="mb-8">
+        <h2 className="text-lg font-light mb-4" style={{ fontSize: '16px', fontWeight: '400', textTransform: 'uppercase', letterSpacing: '2px', borderBottom: '1px solid #ddd', paddingBottom: '8px' }}>
+          SKILLS
+        </h2>
+        {data.skills?.length > 0 ? (
+          <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.6' }}>
+            {data.skills.filter(category => category && category.skills).map((category, index) => (
+              <div key={category.name || index} className={index > 0 ? 'mt-2' : ''}>
+                <strong>{category.name}:</strong> {(category.skills || []).join(', ') || 'No skills listed'}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500" style={{ fontSize: '12px' }}>No skills information provided</p>
+        )}
+      </section>
 
       {/* Projects Section */}
       {data.projects.length > 0 && (
@@ -117,9 +144,9 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data }) => {
                     </div>
                   ))}
                 </div>
-                {project.techStack.length > 0 && (
+                {(project.techStack || []).length > 0 && (
                   <p className="text-xs" style={{ fontSize: '11px', color: '#666' }}>
-                    {project.techStack.join(' • ')}
+                    {(project.techStack || []).join(' • ')}
                   </p>
                 )}
               </div>

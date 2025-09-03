@@ -31,8 +31,20 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
         </div>
       </header>
 
+      {/* Self Introduction Section */}
+      {data.selfIntroduction?.description && (
+        <section className="mb-6">
+          <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
+            PROFESSIONAL SUMMARY
+          </h2>
+          <p className="text-sm" style={{ fontSize: '12px', lineHeight: '1.5' }}>
+            {data.selfIntroduction.description}
+          </p>
+        </section>
+      )}
+
       {/* Professional Experience Section */}
-      {data.experience.length > 0 && (
+      {data.experience?.length > 0 && (
         <section className="mb-6">
           <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
             PROFESSIONAL EXPERIENCE
@@ -52,7 +64,7 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
                   {exp.company}
                 </p>
                 <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.4' }}>
-                  {exp.responsibilities.split('\n').filter(line => line.trim()).map((line, index) => (
+                  {(exp.responsibilities || '').split('\n').filter(line => line.trim()).map((line, index) => (
                     <div key={index} className="mb-1">
                       {line.startsWith('•') ? line : `• ${line}`}
                     </div>
@@ -65,11 +77,11 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
       )}
 
       {/* Education Section */}
-      {data.education.length > 0 && (
-        <section className="mb-6">
-          <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
-            EDUCATION
-          </h2>
+      <section className="mb-6">
+        <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
+          EDUCATION
+        </h2>
+        {data.education?.length > 0 ? (
           <div className="space-y-3">
             {data.education.map((edu) => (
               <div key={edu.id}>
@@ -77,9 +89,16 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
                   <h3 className="text-base font-bold" style={{ fontSize: '14px', fontWeight: 'bold' }}>
                     {edu.degree}
                   </h3>
-                  <span className="text-sm" style={{ fontSize: '12px' }}>
-                    {edu.duration}
-                  </span>
+                  <div className="text-right">
+                    <span className="text-sm block" style={{ fontSize: '12px' }}>
+                      {edu.duration}
+                    </span>
+                    {edu.cgpa && (
+                      <span className="text-sm" style={{ fontSize: '12px', color: '#666' }}>
+                        {edu.cgpa}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className="font-semibold" style={{ fontSize: '13px', fontWeight: '600' }}>
                   {edu.school}
@@ -92,27 +111,31 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <p className="text-sm text-gray-500" style={{ fontSize: '12px' }}>No education information provided</p>
+        )}
+      </section>
 
       {/* Skills Section */}
-      {data.skills.length > 0 && (
-        <section className="mb-6">
-          <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
-            SKILLS
-          </h2>
+      <section className="mb-6">
+        <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
+          SKILLS
+        </h2>
+        {data.skills?.length > 0 ? (
           <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.6' }}>
-            {data.skills.map((category, index) => (
-              <div key={category.name} className={index > 0 ? 'mt-2' : ''}>
-                <strong>{category.name}:</strong> {category.skills.join(', ')}
+            {data.skills.filter(category => category && category.skills).map((category, index) => (
+              <div key={category.name || index} className={index > 0 ? 'mt-2' : ''}>
+                <strong>{category.name}:</strong> {(category.skills || []).join(', ') || 'No skills listed'}
               </div>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <p className="text-sm text-gray-500" style={{ fontSize: '12px' }}>No skills information provided</p>
+        )}
+      </section>
 
       {/* Projects Section */}
-      {data.projects.length > 0 && (
+      {data.projects?.length > 0 && (
         <section>
           <h2 className="resume-section-header" style={{ fontSize: '16px', fontWeight: 'bold', textTransform: 'uppercase', borderBottom: '1px solid #ddd', paddingBottom: '4px', marginBottom: '12px' }}>
             PROJECTS
@@ -124,15 +147,15 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data }) => {
                   {project.title}
                 </h3>
                 <div className="text-sm" style={{ fontSize: '12px', lineHeight: '1.4' }}>
-                  {project.description.split('\n').filter(line => line.trim()).map((line, index) => (
+                  {(project.description || '').split('\n').filter(line => line.trim()).map((line, index) => (
                     <div key={index} className="mb-1">
                       {line.startsWith('•') ? line : `• ${line}`}
                     </div>
                   ))}
                 </div>
-                {project.techStack.length > 0 && (
+                {project.techStack?.length > 0 && (
                   <p className="text-sm" style={{ fontSize: '11px' }}>
-                    <strong>Technologies:</strong> {project.techStack.join(', ')}
+                    <strong>Technologies:</strong> {(project.techStack || []).join(', ')}
                   </p>
                 )}
               </div>
